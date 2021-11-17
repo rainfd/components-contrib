@@ -11,6 +11,7 @@ import (
 	"github.com/stretchr/testify/assert"
 
 	"github.com/dapr/components-contrib/bindings"
+	"github.com/dapr/kit/logger"
 )
 
 func TestParseMetadata(t *testing.T) {
@@ -23,4 +24,17 @@ func TestParseMetadata(t *testing.T) {
 	assert.Equal(t, "endpoint", meta.Endpoint)
 	assert.Equal(t, "accessKeyID", meta.AccessKeyID)
 	assert.Equal(t, "test", meta.Bucket)
+}
+
+func TestOption(t *testing.T) {
+	oss := NewAliCloudOSS(logger.NewLogger("alicloudoss"))
+	oss.metadata = &ossMetadata{}
+
+	t.Run("return error if key is missing", func(t *testing.T) {
+		r := bindings.InvokeRequest{}
+		_, err := oss.get(&r)
+		assert.Error(t, err)
+		_, err = oss.delete(&r)
+		assert.Error(t, err)
+	})
 }

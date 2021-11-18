@@ -1,0 +1,17 @@
+apiVersion: dapr.io/v1alpha1
+kind: Component
+metadata:
+  name: alicloudobjectstorage
+  namespace: default
+spec:
+  type: bindings.alicloud.oss
+  version: v1
+  metadata:
+  - name: endpoint
+    value: ${{AlicloudOssEndpoint}}
+  - name: accessKeyID
+    value: ${{AlicloudOssAccessKeyID}}
+  - name: accessKey
+    value: ${{AlicloudOssAccesskey}}
+  - name: bucket
+    value: ${{AlicloudOssBucket}}

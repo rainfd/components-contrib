@@ -52,3 +52,8 @@ components:
   - component: mqtt
     profile: vernemq
     operations: ["create", "operations", "read"]
+  - component: alicloud.oss
+    operations: ["create", "operations", "get", "delete", "list"]
+    config:
+      output:
+        key: $((uuid))

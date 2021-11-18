@@ -136,7 +136,13 @@ func (s *AliCloudOSS) get(req *bindings.InvokeRequest) (*bindings.InvokeResponse
 
 	body, err := bucket.GetObject(key)
 	if err != nil {
-		return nil, fmt.Errorf("alicloud oss binding error: error getting object : %w", err)
+		serviceErr, ok := err.(oss.ServiceError)
+		if !ok {
+			return nil, fmt.Errorf("alicloud oss binding error: error getting object : %w", err)
+		}
+		if serviceErr.StatusCode == 404 && serviceErr.Code == "NoSuchKey" {
+			return &bindings.InvokeResponse{}, nil
+		}
 	}
 	defer body.Close()
 

@@ -27,6 +27,7 @@ import (
 	"github.com/dapr/components-contrib/state"
 	"github.com/dapr/kit/logger"
 
+	b_alicloud_oss "github.com/dapr/components-contrib/bindings/alicloud/oss"
 	b_azure_blobstorage "github.com/dapr/components-contrib/bindings/azure/blobstorage"
 	b_azure_cosmosdb "github.com/dapr/components-contrib/bindings/azure/cosmosdb"
 	b_azure_eventgrid "github.com/dapr/components-contrib/bindings/azure/eventgrid"
@@ -442,6 +443,8 @@ func loadOutputBindings(tc TestComponent) bindings.OutputBinding {
 		binding = b_influx.NewInflux(testLogger)
 	case mqtt:
 		binding = b_mqtt.NewMQTT(testLogger)
+	case "alicloud.oss":
+		binding = b_alicloud_oss.NewAliCloudOSS(testLogger)
 	default:
 		return nil
 	}
